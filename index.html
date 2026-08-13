@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>PrismOS 1.0 — Developer Key</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-family: Arial, Helvetica, sans-serif;
+
+            background:
+                radial-gradient(circle at top, #24144a, #080810 60%);
+
+            color: #ffffff;
+        }
+
+        .container {
+            width: 460px;
+            max-width: 94%;
+
+            padding: 30px;
+
+            background: rgba(17, 17, 34, 0.95);
+
+            border: 1px solid #39305c;
+            border-radius: 18px;
+
+            box-shadow:
+                0 20px 80px rgba(0, 0, 0, 0.55);
+        }
+
+        .logo {
+            text-align: center;
+
+            font-size: 32px;
+            font-weight: bold;
+
+            color: #c19cff;
+        }
+
+        .version {
+            text-align: center;
+
+            margin-top: 5px;
+
+            color: #9b6cff;
+
+            font-weight: bold;
+        }
+
+        .description {
+            text-align: center;
+
+            margin: 15px 0 28px;
+
+            color: #a6a6bb;
+
+            font-size: 14px;
+        }
+
+        .section {
+            margin-top: 20px;
+
+            padding-top: 15px;
+
+            border-top: 1px solid #292941;
+        }
+
+        .section-title {
+            margin-bottom: 12px;
+
+            color: #c5b8e8;
+
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        label {
+            display: block;
+
+            margin-top: 13px;
+            margin-bottom: 6px;
+
+            color: #b9b9ca;
+
+            font-size: 13px;
+        }
+
+        input,
+        select {
+            width: 100%;
+
+            padding: 12px;
+
+            background: #090912;
+
+            color: white;
+
+            border: 1px solid #353550;
+            border-radius: 8px;
+
+            outline: none;
+
+            font-size: 14px;
+        }
+
+        input:focus,
+        select:focus {
+            border-color: #9568ff;
+        }
+
+        .permissions {
+            display: grid;
+
+            grid-template-columns: 1fr 1fr;
+
+            gap: 8px;
+        }
+
+        .permission {
+            display: flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            padding: 9px;
+
+            background: #0c0c18;
+
+            border: 1px solid #29293e;
+            border-radius: 7px;
+
+            color: #c5c5d5;
+
+            font-size: 12px;
+        }
+
+        .permission input {
+            width: auto;
+        }
+
+        button {
+            width: 100%;
+
+            margin-top: 25px;
+
+            padding: 14px;
+
+            border: none;
+            border-radius: 9px;
+
+            background: linear-gradient(
+                135deg,
+                #7c4dff,
+                #a36cff
+            );
+
+            color: white;
+
+            font-size: 14px;
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition: 0.2s;
+        }
+
+        button:hover {
+            transform: translateY(-1px);
+
+            filter: brightness(1.1);
+        }
+
+        .result {
+            display: none;
+
+            margin-top: 20px;
+
+            padding: 15px;
+
+            background: #07070d;
+
+            border: 1px solid #29293d;
+            border-radius: 9px;
+        }
+
+        .result-title {
+            margin-bottom: 10px;
+
+            color: #b995ff;
+
+            font-weight: bold;
+        }
+
+        pre {
+            margin: 0;
+
+            color: #bba8e8;
+
+            font-size: 11px;
+
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+
+        .download {
+            margin-top: 12px;
+
+            background: #27273b;
+        }
+
+        .footer {
+            margin-top: 20px;
+
+            text-align: center;
+
+            color: #66667c;
+
+            font-size: 11px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="logo">
+        ◆ PrismOS
+    </div>
+
+    <div class="version">
+        PrismOS 1.0
+    </div>
+
+    <div class="description">
+        Developer Product Key Generator
+    </div>
+
+
+    <!-- VERSION -->
+
+    <div class="section">
+
+        <div class="section-title">
+            PrismOS
+        </div>
+
+        <label for="osVersion">
+            Version cible
+        </label>
+
+        <select id="osVersion">
+            <option value="1.0">
+                PrismOS 1.0
+            </option>
+        </select>
+
+    </div>
+
+
+    <!-- DEVELOPER -->
+
+    <div class="section">
+
+        <div class="section-title">
+            Développeur
+        </div>
+
+        <label for="developer">
+            Nom / pseudo
+        </label>
+
+        <input
+            id="developer"
+            type="text"
+            placeholder="Ex : NeoDev"
+            maxlength="64"
+        >
+
+    </div>
+
+
+    <!-- PRODUCT -->
+
+    <div class="section">
+
+        <div class="section-title">
+            Produit
+        </div>
+
+        <label for="productName">
+            Nom du produit
+        </label>
+
+        <input
+            id="productName"
+            type="text"
+            placeholder="Ex : CyberPurple"
+            maxlength="64"
+        >
+
+
+        <label for="productType">
+            Type
+        </label>
+
+        <select id="productType">
+
+            <option value="application">
+                Application
+            </option>
+
+            <option value="game">
+                Jeu
+            </option>
+
+            <option value="personalization">
+                Personnalisation
+            </option>
+
+            <option value="system">
+                Application système
+            </option>
+
+            <option value="driver">
+                Pilote
+            </option>
+
+        </select>
+
+    </div>
+
+
+    <!-- PERMISSIONS -->
+
+    <div class="section">
+
+        <div class="section-title">
+            Permissions
+        </div>
+
+        <div class="permissions">
+
+            <label class="permission">
+                <input
+                    type="checkbox"
+                    value="THEME"
+                >
+                Thèmes
+            </label>
+
+            <label class="permission">
+                <input
+                    type="checkbox"
+                    value="WALLPAPER"
+                >
+                Wallpapers
+            </label>
+
+            <label class="permission">
+                <input
+                    type="checkbox"
+                    value="ICONS"
+                >
+                Icônes
+            </label>
+
+            <label class="permission">
+                <input
+                    type="checkbox"
+                    value="AUDIO"
+                >
+                Audio
+            </label>
+
+            <label class="permission">
+                <input
+                    type="checkbox"
+                    value="NETWORK"
+                >
+                Réseau
+            </label>
+
+            <label class="permission">
+                <input
+                    type="checkbox"
+                    value="STORAGE"
+                >
+                Stockage
+            </label>
+
+        </div>
+
+    </div>
+
+
+    <!-- GENERATE -->
+
+    <button onclick="generateKey()">
+        🔑 Générer le fichier .key
+    </button>
+
+
+    <!-- RESULT -->
+
+    <div
+        id="result"
+        class="result"
+    >
+
+        <div class="result-title">
+            ✓ Clé générée
+        </div>
+
+        <pre id="output"></pre>
+
+        <button
+            class="download"
+            onclick="downloadKey()"
+        >
+            Télécharger le .key
+        </button>
+
+    </div>
+
+
+    <div class="footer">
+        PrismOS 1.0 • PRISM-KEY-1
+    </div>
+
+</div>
+
+
+<script>
+
+let generatedKey = null;
+
+
+/*
+    Générateur d'identifiant.
+*/
+
+function randomID(length) {
+
+    const characters =
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+
+    let result = "";
+
+    const array =
+        new Uint32Array(length);
+
+    crypto.getRandomValues(array);
+
+    for (let i = 0; i < length; i++) {
+
+        result += characters[
+            array[i] % characters.length
+        ];
+
+    }
+
+    return result;
+}
+
+
+/*
+    Génération du Product Key.
+*/
+
+function generateKey() {
+
+    const osVersion =
+        document.getElementById(
+            "osVersion"
+        ).value;
+
+
+    const developer =
+        document.getElementById(
+            "developer"
+        ).value.trim();
+
+
+    const productName =
+        document.getElementById(
+            "productName"
+        ).value.trim();
+
+
+    const productType =
+        document.getElementById(
+            "productType"
+        ).value;
+
+
+    if (!developer) {
+
+        alert(
+            "Entre ton nom ou ton pseudo."
+        );
+
+        return;
+    }
+
+
+    if (!productName) {
+
+        alert(
+            "Entre le nom du produit."
+        );
+
+        return;
+    }
+
+
+    /*
+        Récupération des permissions.
+    */
+
+    const permissions = [];
+
+    document
+        .querySelectorAll(
+            ".permission input:checked"
+        )
+        .forEach(
+            checkbox => {
+                permissions.push(
+                    checkbox.value
+                );
+            }
+        );
+
+
+    /*
+        Identifiants.
+    */
+
+    const developerID =
+        "DEV-" + randomID(12);
+
+
+    const productID =
+        "PRD-" + randomID(12);
+
+
+    const keyID =
+        "KEY-" + randomID(16);
+
+
+    /*
+        Clé publique temporaire.
+
+        IMPORTANT :
+        Ceci n'est pas encore une vraie
+        clé cryptographique.
+
+        Elle sera remplacée par WebCrypto
+        dans la prochaine version.
+    */
+
+    const publicKey =
+        "PUB-" + randomID(32);
+
+
+    /*
+        Objet .key.
+    */
+
+    generatedKey = {
+
+        format:
+            "PRISM-KEY-1",
+
+        prismOS:
+            osVersion,
+
+        keyID:
+            keyID,
+
+        developer: {
+
+            id:
+                developerID,
+
+            name:
+                developer
+
+        },
+
+        product: {
+
+            id:
+                productID,
+
+            name:
+                productName,
+
+            type:
+                productType
+
+        },
+
+        permissions:
+            permissions,
+
+        publicKey:
+            publicKey,
+
+        issuer:
+            "PrismOS Product Authority",
+
+        status:
+            "UNSIGNED",
+
+        created:
+            new Date().toISOString()
+
+    };
+
+
+    /*
+        Affichage.
+    */
+
+    document.getElementById(
+        "output"
+    ).textContent =
+        JSON.stringify(
+            generatedKey,
+            null,
+            4
+        );
+
+
+    document.getElementById(
+        "result"
+    ).style.display =
+        "block";
+}
+
+
+/*
+    Téléchargement du .key.
+*/
+
+function downloadKey() {
+
+    if (!generatedKey) {
+
+        return;
+    }
+
+
+    const content =
+        JSON.stringify(
+            generatedKey,
+            null,
+            4
+        );
+
+
+    const blob =
+        new Blob(
+            [content],
+            {
+                type:
+                    "application/octet-stream"
+            }
+        );
+
+
+    const url =
+        URL.createObjectURL(blob);
+
+
+    const filename =
+        generatedKey.product.name
+            .replace(
+                /[^a-zA-Z0-9_-]/g,
+                "_"
+            );
+
+
+    const link =
+        document.createElement("a");
+
+
+    link.href = url;
+
+    link.download =
+        filename + ".key";
+
+
+    document.body.appendChild(link);
+
+    link.click();
+
+    document.body.removeChild(link);
+
+    URL.revokeObjectURL(url);
+}
+
+</script>
+
+</body>
+</html>
