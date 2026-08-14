@@ -185,6 +185,13 @@
             filter: brightness(1.1);
         }
 
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+            filter: none;
+        }
+
         .result {
             display: none;
 
@@ -232,6 +239,57 @@
 
             font-size: 11px;
         }
+
+        /* ---- GATE SCREEN ---- */
+
+        .gate {
+            text-align: center;
+        }
+
+        .gate-icon {
+            font-size: 40px;
+
+            margin-bottom: 10px;
+        }
+
+        .gate-msg {
+            margin: 4px 0 18px;
+
+            color: #a6a6bb;
+
+            font-size: 13px;
+        }
+
+        .gate input {
+            text-align: center;
+
+            letter-spacing: 2px;
+
+            text-transform: uppercase;
+
+            font-family: monospace;
+        }
+
+        .gate-error {
+            display: none;
+
+            margin-top: 10px;
+
+            padding: 10px;
+
+            background: rgba(255, 80, 80, 0.08);
+
+            border: 1px solid rgba(255, 80, 80, 0.4);
+            border-radius: 8px;
+
+            color: #ff8a8a;
+
+            font-size: 12px;
+        }
+
+        .app {
+            display: none;
+        }
     </style>
 </head>
 
@@ -252,189 +310,237 @@
     </div>
 
 
-    <!-- VERSION -->
+    <!-- ============================= -->
+    <!-- GATE : vérification de clé    -->
+    <!-- ============================= -->
 
-    <div class="section">
+    <div id="gate" class="gate">
 
-        <div class="section-title">
-            PrismOS
+        <div class="gate-icon">
+            🔒
         </div>
 
-        <label for="osVersion">
-            Version cible
-        </label>
-
-        <select id="osVersion">
-            <option value="1.0">
-                PrismOS 1.0
-            </option>
-        </select>
-
-    </div>
-
-
-    <!-- DEVELOPER -->
-
-    <div class="section">
-
         <div class="section-title">
-            Développeur
+            Accès développeur requis
         </div>
 
-        <label for="developer">
-            Nom / pseudo
+        <div class="gate-msg">
+            Entre ta clé développeur PrismOS pour accéder au générateur.
+        </div>
+
+        <label for="devKeyInput">
+            Clé développeur
         </label>
 
         <input
-            id="developer"
+            id="devKeyInput"
             type="text"
-            placeholder="Ex : NeoDev"
-            maxlength="64"
+            placeholder="XXXXX-XXXXX-XXXXX-XXXXX-XXXXX"
+            maxlength="29"
         >
 
-    </div>
-
-
-    <!-- PRODUCT -->
-
-    <div class="section">
-
-        <div class="section-title">
-            Produit
+        <div id="gateError" class="gate-error">
+            Clé invalide. Vérifie ta saisie et réessaie.
         </div>
 
-        <label for="productName">
-            Nom du produit
-        </label>
-
-        <input
-            id="productName"
-            type="text"
-            placeholder="Ex : CyberPurple"
-            maxlength="64"
-        >
-
-
-        <label for="productType">
-            Type
-        </label>
-
-        <select id="productType">
-
-            <option value="application">
-                Application
-            </option>
-
-            <option value="game">
-                Jeu
-            </option>
-
-            <option value="personalization">
-                Personnalisation
-            </option>
-
-            <option value="system">
-                Application système
-            </option>
-
-            <option value="driver">
-                Pilote
-            </option>
-
-        </select>
-
-    </div>
-
-
-    <!-- PERMISSIONS -->
-
-    <div class="section">
-
-        <div class="section-title">
-            Permissions
-        </div>
-
-        <div class="permissions">
-
-            <label class="permission">
-                <input
-                    type="checkbox"
-                    value="THEME"
-                >
-                Thèmes
-            </label>
-
-            <label class="permission">
-                <input
-                    type="checkbox"
-                    value="WALLPAPER"
-                >
-                Wallpapers
-            </label>
-
-            <label class="permission">
-                <input
-                    type="checkbox"
-                    value="ICONS"
-                >
-                Icônes
-            </label>
-
-            <label class="permission">
-                <input
-                    type="checkbox"
-                    value="AUDIO"
-                >
-                Audio
-            </label>
-
-            <label class="permission">
-                <input
-                    type="checkbox"
-                    value="NETWORK"
-                >
-                Réseau
-            </label>
-
-            <label class="permission">
-                <input
-                    type="checkbox"
-                    value="STORAGE"
-                >
-                Stockage
-            </label>
-
-        </div>
-
-    </div>
-
-
-    <!-- GENERATE -->
-
-    <button onclick="generateKey()">
-        🔑 Générer le fichier .key
-    </button>
-
-
-    <!-- RESULT -->
-
-    <div
-        id="result"
-        class="result"
-    >
-
-        <div class="result-title">
-            ✓ Clé générée
-        </div>
-
-        <pre id="output"></pre>
-
-        <button
-            class="download"
-            onclick="downloadKey()"
-        >
-            Télécharger le .key
+        <button onclick="checkDevKey()">
+            🔑 Déverrouiller
         </button>
+
+    </div>
+
+
+    <!-- ============================= -->
+    <!-- APP : générateur (masqué)     -->
+    <!-- ============================= -->
+
+    <div id="app" class="app">
+
+        <!-- VERSION -->
+
+        <div class="section">
+
+            <div class="section-title">
+                PrismOS
+            </div>
+
+            <label for="osVersion">
+                Version cible
+            </label>
+
+            <select id="osVersion">
+                <option value="1.0">
+                    PrismOS 1.0
+                </option>
+            </select>
+
+        </div>
+
+
+        <!-- DEVELOPER -->
+
+        <div class="section">
+
+            <div class="section-title">
+                Développeur
+            </div>
+
+            <label for="developer">
+                Nom / pseudo
+            </label>
+
+            <input
+                id="developer"
+                type="text"
+                placeholder="Ex : NeoDev"
+                maxlength="64"
+            >
+
+        </div>
+
+
+        <!-- PRODUCT -->
+
+        <div class="section">
+
+            <div class="section-title">
+                Produit
+            </div>
+
+            <label for="productName">
+                Nom du produit
+            </label>
+
+            <input
+                id="productName"
+                type="text"
+                placeholder="Ex : CyberPurple"
+                maxlength="64"
+            >
+
+
+            <label for="productType">
+                Type
+            </label>
+
+            <select id="productType">
+
+                <option value="application">
+                    Application
+                </option>
+
+                <option value="game">
+                    Jeu
+                </option>
+
+                <option value="personalization">
+                    Personnalisation
+                </option>
+
+                <option value="system">
+                    Application système
+                </option>
+
+                <option value="driver">
+                    Pilote
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <!-- PERMISSIONS -->
+
+        <div class="section">
+
+            <div class="section-title">
+                Permissions
+            </div>
+
+            <div class="permissions">
+
+                <label class="permission">
+                    <input
+                        type="checkbox"
+                        value="THEME"
+                    >
+                    Thèmes
+                </label>
+
+                <label class="permission">
+                    <input
+                        type="checkbox"
+                        value="WALLPAPER"
+                    >
+                    Wallpapers
+                </label>
+
+                <label class="permission">
+                    <input
+                        type="checkbox"
+                        value="ICONS"
+                    >
+                    Icônes
+                </label>
+
+                <label class="permission">
+                    <input
+                        type="checkbox"
+                        value="AUDIO"
+                    >
+                    Audio
+                </label>
+
+                <label class="permission">
+                    <input
+                        type="checkbox"
+                        value="NETWORK"
+                    >
+                    Réseau
+                </label>
+
+                <label class="permission">
+                    <input
+                        type="checkbox"
+                        value="STORAGE"
+                    >
+                    Stockage
+                </label>
+
+            </div>
+
+        </div>
+
+
+        <!-- GENERATE -->
+
+        <button onclick="generateKey()">
+            🔑 Générer le fichier .key
+        </button>
+
+
+        <!-- RESULT -->
+
+        <div
+            id="result"
+            class="result"
+        >
+
+            <div class="result-title">
+                ✓ Clé générée
+            </div>
+
+            <pre id="output"></pre>
+
+            <button
+                class="download"
+                onclick="downloadKey()"
+            >
+                Télécharger le .key
+            </button>
+
+        </div>
 
     </div>
 
@@ -449,6 +555,85 @@
 <script>
 
 let generatedKey = null;
+
+
+/*
+    Clé développeur valide.
+
+    (À terme, cette vérification devra être faite côté serveur —
+    ceci n'est qu'une protection côté client, facilement contournable.)
+*/
+
+const VALID_DEV_KEY = "3E82D-2S728-2D821-2NDI2-8BCMP";
+
+
+/*
+    Vérification de la clé développeur.
+*/
+
+function checkDevKey() {
+
+    const input =
+        document.getElementById("devKeyInput");
+
+    const errorBox =
+        document.getElementById("gateError");
+
+    const entered =
+        input.value.trim().toUpperCase();
+
+    if (entered === VALID_DEV_KEY) {
+
+        document.getElementById("gate").style.display =
+            "none";
+
+        document.getElementById("app").style.display =
+            "block";
+
+        errorBox.style.display =
+            "none";
+
+        /*
+            UserLock : quand la clé développeur est utilisée,
+            le champ "Développeur" est forcé à "Unknow" et
+            verrouillé (non modifiable).
+        */
+
+        const developerField =
+            document.getElementById("developer");
+
+        developerField.value = "Unknow";
+
+        developerField.readOnly = true;
+
+        developerField.style.opacity = "0.6";
+
+        developerField.style.cursor = "not-allowed";
+
+    } else {
+
+        errorBox.style.display =
+            "block";
+
+        input.focus();
+        input.select();
+    }
+}
+
+
+/*
+    Permet de valider avec la touche Entrée.
+*/
+
+document
+    .getElementById("devKeyInput")
+    .addEventListener("keydown", function (e) {
+
+        if (e.key === "Enter") {
+            checkDevKey();
+        }
+
+    });
 
 
 /*
