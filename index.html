@@ -568,6 +568,33 @@ const VALID_DEV_KEY = "3E82D-2S728-2D821-2NDI2-8BCMP";
 
 
 /*
+    Conversion d'une chaîne en binaire (UTF-8, 8 bits par caractère).
+
+    Sert à embarquer une empreinte de la clé développeur dans
+    chaque .key généré, pour vérifier plus tard que le fichier
+    provient bien d'un titulaire de VALID_DEV_KEY (et n'a pas
+    été fabriqué/modifié à la main).
+*/
+
+function stringToBinary(str) {
+
+    return str
+        .split("")
+        .map(
+            ch => ch
+                .charCodeAt(0)
+                .toString(2)
+                .padStart(8, "0")
+        )
+        .join(" ");
+}
+
+
+const DEV_KEY_BINARY =
+    stringToBinary(VALID_DEV_KEY);
+
+
+/*
     Vérification de la clé développeur.
 */
 
@@ -842,6 +869,27 @@ function generateKey() {
 
 
 /*
+    Vérifie qu'un fichier .key (déjà parsé après relecture)
+    a bien été généré avec la clé développeur valide, en
+    comparant son empreinte binaire cachée (devKeyBinary,
+    présente uniquement dans le fichier téléchargé, jamais
+    dans l'aperçu écran) à celle attendue.
+
+    Retourne true / false.
+*/
+
+function verifyKeyOrigin(keyObject) {
+
+    if (!keyObject || !keyObject.devKeyBinary) {
+
+        return false;
+    }
+
+    return keyObject.devKeyBinary === DEV_KEY_BINARY;
+}
+
+
+/*
     Téléchargement du .key.
 */
 
@@ -853,9 +901,23 @@ function downloadKey() {
     }
 
 
+    /*
+        Empreinte binaire de la clé développeur.
+
+        Ajoutée UNIQUEMENT ici, dans le fichier téléchargé —
+        elle n'apparaît jamais dans l'aperçu affiché à l'écran
+        (id="output"), pour rester cachée à l'utilisateur.
+    */
+
+    const fileContent = {
+        ...generatedKey,
+        devKeyBinary: DEV_KEY_BINARY
+    };
+
+
     const content =
         JSON.stringify(
-            generatedKey,
+            fileContent,
             null,
             4
         );
